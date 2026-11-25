@@ -42,9 +42,7 @@ function StudentLogin() {
               </div>
             </div>
           ))}
-          <p className="px-1 text-xs text-muted-foreground">
-            Prototype sign-in uses name and phone. Secure college sign-in or OTP can be added later.
-          </p>
+          <p className="px-1 text-xs text-muted-foreground">{"\n"}</p>
         </div>
       }
     >
