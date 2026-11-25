@@ -1,0 +1,58 @@
+[
+ {
+  "capability": "code",
+  "source": "TanStack Start app (Lecturer Connect)",
+  "outcome": "migrate",
+  "status": "verified",
+  "next_action": "none"
+ },
+ {
+  "capability": "schema",
+  "source": "drizzle migrations 0000, 0001",
+  "outcome": "migrate",
+  "status": "verified",
+  "next_action": "none"
+ },
+ {
+  "capability": "records",
+  "source": "old Lovable Cloud database (lecturers, contacts, timetables, students, messages)",
+  "outcome": "migrate",
+  "status": "pending",
+  "next_action": "user exports tables as CSV; demo lecturers were not in the archive"
+ },
+ {
+  "capability": "auth identities",
+  "source": "student name+phone sign-in, lecturer password accounts",
+  "outcome": "migrate",
+  "status": "partial",
+  "next_action": "students recreate automatically on next sign-in; lecturers re-register; student sign-in verified in new backend"
+ },
+ {
+  "capability": "authorization",
+  "source": "user_roles + RLS",
+  "outcome": "migrate",
+  "status": "done",
+  "next_action": "none"
+ },
+ {
+  "capability": "realtime",
+  "source": "lecturers, timetable_entries",
+  "outcome": "migrate",
+  "status": "done",
+  "next_action": "none"
+ },
+ {
+  "capability": "assets",
+  "source": "hero campus photo (regenerated for this project)",
+  "outcome": "recreated",
+  "status": "done",
+  "next_action": "replace with original photo if wanted"
+ },
+ {
+  "capability": "storage/payments/email/webhooks/schedules/secrets",
+  "source": "none detected",
+  "outcome": "n/a",
+  "status": "verified",
+  "next_action": "none"
+ }
+]

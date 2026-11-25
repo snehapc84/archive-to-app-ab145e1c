@@ -28,3 +28,6 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Database schema lives in drizzle/migrations (applied via Lovable Cloud migrations); keep app reads/writes going through RLS-scoped clients, using the admin client only inside auth.functions.ts sign-in handlers.
