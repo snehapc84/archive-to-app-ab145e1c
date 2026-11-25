@@ -17,7 +17,7 @@ export function SiteFooter() {
     <footer className="border-t border-border bg-card">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-6 text-sm text-muted-foreground sm:flex-row sm:px-6">
         <p>
-          <span className="font-display font-semibold text-navy">Lecturer Connect</span> · Find your lecturer, at the right time.
+          <span className="font-display font-semibold text-navy">Lecturer Connect</span>{"\u00a0"}
         </p>
         <p>{"\n"}</p>
       </div>
