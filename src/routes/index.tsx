@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpenCheck, CalendarDays, GraduationCap, MessageCircle, Presentation, Search, Signal } from "lucide-react";
+import { ArrowRight, CalendarDays, GraduationCap, MessageCircle, Presentation, Search, Signal } from "lucide-react";
 import heroAsset from "@/assets/hero-campus.jpg.asset.json";
 const heroImage = heroAsset.url;
 import { Button } from "@/components/ui/button";
@@ -147,10 +147,6 @@ function Home() {
                 <p className="mt-1.5 text-muted-foreground">{text}</p>
               </div>
             ))}
-          </div>
-          <div className="mt-8 flex items-start gap-3 rounded-2xl border border-butter-strong bg-butter px-5 py-4 text-sm text-navy">
-            <BookOpenCheck className="mt-0.5 size-5 shrink-0" />
-            <p></p>
           </div>
         </section>
       </main>
