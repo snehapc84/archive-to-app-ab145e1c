@@ -131,8 +131,8 @@ function Home() {
               { icon: CalendarDays, title: "Plan your visit", text: "View their weekly timetable and pick the right time." },
               {
                 icon: MessageCircle,
-                title: "Message Your Lecturer",
-                text: "Text or message your lecturer directly through the website, ask your doubts and receive replies without having to search for them.",
+                title: "Connect & Communicate",
+                text: "A simple way to stay connected with your lecturers through direct messaging.",
               },
             ].map(({ icon: Icon, title, text }, i) => (
               <div
