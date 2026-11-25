@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { lecturerRegisterSchema, lecturerAccountEmail, loginSchema, namesMatch, normalizeName, normalizePhone, parseIdentifier } from "./validation";
 
 type Role = "student" | "lecturer";
@@ -133,5 +134,55 @@ export const registerLecturer = createServerFn({ method: "POST" })
     } catch (err) {
       console.error("registerLecturer failed", err);
       return { ok: false, error: GENERIC_ERROR };
+    }
+  });
+
+export type DeleteAccountResult = { ok: true } | { ok: false; error: string };
+
+/** A signed-in lecturer permanently deletes their own account after re-entering their password. */
+export const deleteLecturerAccount = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => z.object({ password: z.string().min(1).max(200) }).parse(input))
+  .handler(async ({ data, context }): Promise<DeleteAccountResult> => {
+    const { supabase, userId } = context;
+    const { data: isLecturer } = await supabase.rpc("has_role", { _user_id: userId, _role: "lecturer" });
+    if (!isLecturer) return { ok: false, error: "Only lecturer accounts can be deleted here." };
+    const { data: userData } = await supabase.auth.getUser();
+    const email = userData.user?.email;
+    if (!email || userData.user?.id !== userId) return { ok: false, error: "Please log in again and retry." };
+
+    // Verify the password with a throwaway client that keeps no session.
+    const { createClient } = await import("@supabase/supabase-js");
+    const key = process.env["SUPABASE_PUBLISHABLE_KEY"]!;
+    const verifier = createClient(process.env["SUPABASE_URL"]!, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { error: pwError } = await verifier.auth.signInWithPassword({ email, password: data.password });
+    if (pwError) return { ok: false, error: "Incorrect password." };
+
+    try {
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: lecturer, error } = await supabaseAdmin
+        .from("lecturers")
+        .select("id")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (error) throw error;
+      if (lecturer) {
+        await supabaseAdmin.from("timetable_entries").delete().eq("lecturer_id", lecturer.id);
+        await supabaseAdmin.from("lecturer_contacts").delete().eq("lecturer_id", lecturer.id);
+        // Keep the row so past messages stay readable, but hide it and unlink the login.
+        const { error: upErr } = await supabaseAdmin
+          .from("lecturers")
+          .update({ user_id: null, deleted_at: new Date().toISOString(), status: "absent", status_note: null, status_until: null })
+          .eq("id", lecturer.id);
+        if (upErr) throw upErr;
+      }
+      const { error: delErr } = await supabaseAdmin.auth.admin.deleteUser(userId);
+      if (delErr) throw delErr;
+      return { ok: true };
+    } catch (err) {
+      console.error("deleteLecturerAccount failed", err);
+      return { ok: false, error: "Couldn't delete your account. Please try again." };
     }
   });

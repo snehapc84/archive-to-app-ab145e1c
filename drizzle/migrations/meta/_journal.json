@@ -15,6 +15,13 @@
       "when": 1795622337238,
       "tag": "0001_student_lecturer_messages",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795628445704,
+      "tag": "0002_lecturer_account_deletion",
+      "breakpoints": true
     }
   ]
 }
