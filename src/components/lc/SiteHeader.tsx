@@ -19,7 +19,7 @@ export function SiteFooter() {
         <p>
           <span className="font-display font-semibold text-navy">Lecturer Connect</span> · Find your lecturer, at the right time.
         </p>
-        <p>Phone numbers are private and never shown to students.</p>
+        <p>{"\n"}</p>
       </div>
     </footer>
   );
