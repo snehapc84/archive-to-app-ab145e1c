@@ -150,10 +150,7 @@ function Home() {
           </div>
           <div className="mt-8 flex items-start gap-3 rounded-2xl border border-butter-strong bg-butter px-5 py-4 text-sm text-navy">
             <BookOpenCheck className="mt-0.5 size-5 shrink-0" />
-            <p>
-              Demo mode: six fictional lecturers are included so you can try everything. Lecturer demo logins are listed
-              on the lecturer login page.
-            </p>
+            <p></p>
           </div>
         </section>
       </main>
