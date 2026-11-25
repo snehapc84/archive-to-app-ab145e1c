@@ -43,10 +43,10 @@
  },
  {
   "capability": "assets",
-  "source": "hero campus photo (regenerated for this project)",
-  "outcome": "recreated",
+  "source": "original hero illustration from source project",
+  "outcome": "migrate",
   "status": "done",
-  "next_action": "replace with original photo if wanted"
+  "next_action": "none"
  },
  {
   "capability": "storage/payments/email/webhooks/schedules/secrets",
