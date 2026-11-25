@@ -17,7 +17,7 @@ export function LoginLayout({
   eyebrow: string;
   title: string;
   subtitle: string;
-  aside: ReactNode;
+  aside?: ReactNode;
   switchTo: { to: "/login/student" | "/login/lecturer"; label: string };
   children: ReactNode;
 }) {
@@ -28,7 +28,13 @@ export function LoginLayout({
           <Link to={switchTo.to}>{switchTo.label}</Link>
         </Button>
       </SiteHeader>
-      <main className="mx-auto grid w-full max-w-6xl flex-1 items-start gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-16">
+      <main
+        className={
+          aside
+            ? "mx-auto grid w-full max-w-6xl flex-1 items-start gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:py-16"
+            : "mx-auto flex w-full max-w-xl flex-1 flex-col justify-center px-4 py-10 sm:px-6 lg:py-16"
+        }
+      >
         <div className="animate-fade-up">
           <Link
             to="/"
@@ -48,7 +54,7 @@ export function LoginLayout({
             {children}
           </div>
         </div>
-        <aside className="animate-fade-up [animation-delay:120ms]">{aside}</aside>
+        {aside ? <aside className="animate-fade-up [animation-delay:120ms]">{aside}</aside> : null}
       </main>
       <SiteFooter />
     </div>
